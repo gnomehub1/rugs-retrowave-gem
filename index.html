@@ -18,6 +18,10 @@
             --font-body: 'Rajdhani', sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -25,9 +29,10 @@
             color: var(--text-main);
             font-family: var(--font-body);
             overflow-x: hidden;
+            cursor: crosshair; 
         }
 
-        /* --- BACKGROUND SCENE (V2 Version) --- */
+        /* --- BACKGROUND SCENE --- */
         .scene-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -69,6 +74,7 @@
         .logo {
             font-family: var(--font-header); font-size: 1.2rem;
             color: var(--neon-cyan); text-shadow: 2px 2px 0px var(--neon-pink);
+            cursor: pointer;
         }
 
         .lang-toggle-container {
@@ -94,7 +100,7 @@
             box-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        /* --- HERO SECTION (V2 Logic) --- */
+        /* --- HERO SECTION --- */
         .hero {
             min-height: 90vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
@@ -105,7 +111,7 @@
             position: relative; width: 400px; height: 400px;
             display: flex; justify-content: center; align-items: center; margin-bottom: 40px;
         }
-        /* V2 Abstract Lines Effect */
+        
         .triangle {
             position: absolute; width: 100%; height: 100%;
             clip-path: polygon(50% 100%, 0 0, 100% 0);
@@ -172,14 +178,28 @@
         }
         @keyframes blinkButton { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
-        /* --- SECTION HEADERS --- */
+        /* --- GLITCH EFFECT --- */
+        .glitch-text { position: relative; }
+        .glitch-text:hover {
+            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--neon-pink);
+        }
+        @keyframes glitch-anim {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
         .section-header {
             font-family: var(--font-header); font-size: 1.5rem; color: var(--neon-cyan);
             text-align: center; margin: 80px 0 40px 0; text-transform: uppercase;
             text-shadow: 2px 2px 0px var(--neon-purple); position: relative; z-index: 5;
         }
 
-        /* --- GALLERY GRID (Select Your Player) --- */
+        /* --- GALLERY GRID --- */
         .gallery-container {
             max-width: 1200px; margin: 0 auto; padding: 20px; z-index: 5; position: relative;
         }
@@ -192,7 +212,8 @@
             transition: 0.3s; cursor: pointer; position: relative; overflow: hidden;
         }
         .gallery-item:hover {
-            border-color: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan);
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 20px var(--neon-purple);
             transform: translateY(-5px);
         }
         .gallery-item img {
@@ -204,13 +225,14 @@
         }
         .gallery-item::after {
             content: "PLAYER SELECT"; position: absolute; bottom: 0; left: 0; width: 100%;
-            background: var(--neon-pink); color: #000; text-align: center;
+            background: var(--neon-cyan);
+            color: #000; text-align: center;
             font-family: var(--font-header); font-size: 0.6rem; padding: 5px;
             transform: translateY(100%); transition: 0.3s;
         }
         .gallery-item:hover::after { transform: translateY(0); }
 
-        /* --- MODAL (LIGHTBOX) --- */
+        /* --- MODAL --- */
         .modal {
             display: none; position: fixed; z-index: 9999; left: 0; top: 0;
             width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.95);
@@ -226,13 +248,18 @@
         }
         .modal-btn-container { text-align: center; margin-top: 20px; }
 
-        /* --- TUTORIAL (PROCESS) --- */
+        /* --- TUTORIAL --- */
         .process-container {
             max-width: 900px; margin: 0 auto; padding: 40px 20px; z-index: 5; position: relative;
         }
         .process-step {
             display: flex; align-items: center; margin-bottom: 30px;
             background: rgba(255,255,255,0.05); padding: 20px; border-left: 5px solid var(--neon-cyan);
+            transition: 0.3s;
+        }
+        .process-step:hover {
+            border-left: 5px solid var(--neon-pink);
+            background: rgba(255,255,255,0.1);
         }
         .step-num {
             font-family: var(--font-header); font-size: 2rem; color: var(--neon-pink);
@@ -246,7 +273,29 @@
             text-align: center; margin-top: 20px; border: 1px dashed var(--neon-cyan); padding: 10px;
         }
 
-        /* --- CONTACT (GAME OVER) --- */
+        /* --- FAQ SECTION (NEW) --- */
+        .faq-container {
+            max-width: 1000px; margin: 0 auto 50px auto; padding: 20px; z-index: 5; position: relative;
+        }
+        .faq-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+        }
+        .faq-item {
+            background: rgba(0,0,0,0.8); border: 1px solid #444; padding: 15px;
+            transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .faq-item:hover {
+            border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        .faq-item h4 {
+            font-family: var(--font-header); color: var(--neon-pink); font-size: 0.8rem; margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .faq-item p {
+            font-size: 0.9rem; line-height: 1.4; color: #ccc;
+        }
+
+        /* --- CONTACT --- */
         .contact-container {
             max-width: 600px; margin: 0 auto 100px auto; padding: 20px; z-index: 5; position: relative;
             background: rgba(0,0,0,0.8); border: 1px solid var(--neon-purple);
@@ -259,12 +308,12 @@
         }
         input:focus, textarea:focus { border-color: var(--neon-pink); outline: none; }
         
-        /* Special Button Styles */
         .btn-submit {
             width: 100%; padding: 15px; background: var(--neon-purple); border: none;
             color: #fff; font-family: var(--font-header); cursor: pointer; text-transform: uppercase;
+            transition: 0.3s;
         }
-        .btn-submit:hover { background: var(--neon-pink); }
+        .btn-submit:hover { background: var(--neon-pink); letter-spacing: 2px; }
 
         .social-links {
             display: flex; justify-content: center; gap: 20px; margin-top: 30px;
@@ -275,11 +324,15 @@
         }
         .ig-link { color: var(--neon-pink); text-decoration: none; font-size: 1.2rem; }
 
-        /* SCANLINES */
         .scanlines {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: repeating-linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 50%);
             background-size: 100% 4px; pointer-events: none; z-index: 999; opacity: 0.6;
+            animation: scanlineAnim 10s linear infinite;
+        }
+        @keyframes scanlineAnim {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
         }
 
         @media (max-width: 768px) {
@@ -288,6 +341,7 @@
             .hero-rug-frame { width: 200px; }
             .process-step { flex-direction: column; text-align: center; }
             .step-num { margin: 0 0 10px 0; }
+            .faq-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -297,7 +351,7 @@
     <div class="scene-container"><div class="grid"></div></div>
 
     <nav>
-        <div class="logo">BILLY <span style="color:var(--neon-pink)">THE KID</span></div>
+        <div class="logo" onclick="window.scrollTo(0,0)">BILLY <span style="color:var(--neon-pink)">THE KID</span></div>
         <div class="lang-toggle-container">
             <span>ES</span>
             <label class="switch">
@@ -315,45 +369,30 @@
                 <img src="hero-rug.png" alt="Retro Rug Showcase" class="hero-rug-img">
             </div>
         </div>
-        <h1 id="hero-title">TUFTING NOSTÁLGICO</h1>
+        <h1 id="hero-title" class="glitch-text">TUFTING NOSTÁLGICO</h1>
         <p class="subtitle" id="hero-sub">Alfombras hechas a mano. Vibes retro, pixel art y pop culture para tu arcade base.</p>
-        <a href="#contact" class="btn-arcade">INSERT COIN TO START</a>
+        
+        <a href="#gallery-start" class="btn-arcade">INSERT COIN TO START</a>
     </section>
 
-    <h2 class="section-header" id="gallery-title">SELECT YOUR CHARACTER</h2>
+    <div id="gallery-start"></div> 
+    
+    <h2 class="section-header glitch-text" id="gallery-title">ELIGE TU PERSONAJE</h2>
     <div class="gallery-container">
         <div class="gallery-grid">
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="mario.jpg" alt="Super Mario">
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="fightclub.jpg" alt="Fight Club">
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="adventure.jpg" alt="Adventure Time">
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="frog.jpg" alt="Frog">
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="bluecat.jpg" alt="Blue Cat">
-            </div>
-             <div class="gallery-item" onclick="openModal(this)">
-                <img src="wallace.jpg" alt="William Wallace">
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="hendrix.jpg" alt="Jimi Hendrix">
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="sunsetcat.jpg" alt="Sunset Cat">
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="lennon.jpg" alt="John Lennon">
-            </div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="mario.jpg" alt="Super Mario"></div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="fightclub.jpg" alt="Fight Club"></div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="adventure.jpg" alt="Adventure Time"></div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="frog.jpg" alt="Frog"></div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="bluecat.jpg" alt="Blue Cat"></div>
+             <div class="gallery-item" onclick="openModal(this)"><img src="wallace.jpg" alt="William Wallace"></div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="hendrix.jpg" alt="Jimi Hendrix"></div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="sunsetcat.jpg" alt="Sunset Cat"></div>
+            <div class="gallery-item" onclick="openModal(this)"><img src="lennon.jpg" alt="John Lennon"></div>
         </div>
     </div>
 
-    <h2 class="section-header" id="process-title">HOW TO PLAY</h2>
+    <h2 class="section-header glitch-text" id="process-title">CÓMO JUGAR</h2>
     <div class="process-container">
         <div class="process-step">
             <div class="step-num">01</div>
@@ -381,7 +420,45 @@
         </div>
     </div>
 
-    <h2 class="section-header" id="contact-title">CONTINUE?</h2>
+    <h2 class="section-header glitch-text" id="faq-title">CHEAT CODES (INFO)</h2>
+    <div class="faq-container">
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h4 id="faq-t1">TIEMPO DE CARGA</h4>
+                <p id="faq-d1">1-2 Semanas después de la orden (Depende de disponibilidad).</p>
+            </div>
+            <div class="faq-item">
+                <h4 id="faq-t2">DISEÑO GRATIS</h4>
+                <p id="faq-d2">La propuesta de diseño digital es 100% GRATIS.</p>
+            </div>
+            <div class="faq-item">
+                <h4 id="faq-t3">ENVÍO / TRAVEL</h4>
+                <p id="faq-d3">Envío GRATIS a todo el territorio Colombiano.</p>
+            </div>
+            <div class="faq-item">
+                <h4 id="faq-t4">CUSTOM SKINS</h4>
+                <p id="faq-d4">Sube tus fotos o imágenes personales para un diseño a medida.</p>
+            </div>
+            <div class="faq-item">
+                <h4 id="faq-t5">GARANTÍA (SAVE)</h4>
+                <p id="faq-d5">Todas las alfombras tienen 1 AÑO de garantía.</p>
+            </div>
+            <div class="faq-item">
+                <h4 id="faq-t6">SYSTEM CARE</h4>
+                <p id="faq-d6">Evitar sol directo. No lavadora. Usar pañitos húmedos o aspiradora.</p>
+            </div>
+            <div class="faq-item">
+                <h4 id="faq-t7">RESOLUCIÓN</h4>
+                <p id="faq-d7">Estándar: 70cm x 100cm. Puede variar según diseño.</p>
+            </div>
+            <div class="faq-item">
+                <h4 id="faq-t8">PAGOS / CREDITS</h4>
+                <p id="faq-d8">Nequi, Daviplata, Bancolombia o Transferencia.</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-header glitch-text" id="contact-title">¿CONTINUAR?</h2>
     <div class="contact-container" id="contact">
         <form action="https://formspree.io/f/meoyqawk" method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -431,6 +508,16 @@
                 step2T: "INSERT COIN", step2D: "Recibe la propuesta, paga y empezamos a tejer.",
                 step3T: "WARP ZONE", step3D: "Envío en 1-2 semanas. Material: Hilo Acrílico.",
                 shipping: "REGION LOCK: COLOMBIA (GRATIS) // WORLD (DLC REQUERIDO)",
+                // FAQ ES
+                faqTitle: "CHEAT CODES (INFO)",
+                faqT1: "TIEMPO DE CARGA", faqD1: "1-2 Semanas después de la orden (Depende de disponibilidad).",
+                faqT2: "DISEÑO GRATIS", faqD2: "La propuesta de diseño digital es 100% GRATIS.",
+                faqT3: "ENVÍO / TRAVEL", faqD3: "Envío GRATIS a todo el territorio Colombiano.",
+                faqT4: "CUSTOM SKINS", faqD4: "Sube tus fotos o imágenes personales para un diseño a medida.",
+                faqT5: "GARANTÍA (SAVE)", faqD5: "Todas las alfombras tienen 1 AÑO de garantía.",
+                faqT6: "SYSTEM CARE", faqD6: "Evitar sol directo. No lavadora. Usar pañitos húmedos o aspiradora.",
+                faqT7: "RESOLUCIÓN", faqD7: "Estándar: 70cm x 100cm. Puede variar según diseño.",
+                faqT8: "PAGOS / CREDITS", faqD8: "Nequi, Daviplata, Bancolombia o Transferencia.",
                 contactTitle: "¿CONTINUAR?"
             },
             en: {
@@ -442,6 +529,16 @@
                 step2T: "INSERT COIN", step2D: "Receive proposal, pay, and we start weaving.",
                 step3T: "WARP ZONE", step3D: "Shipping in 1-2 weeks. Material: Acrylic Yarn.",
                 shipping: "REGION LOCK: COLOMBIA (FREE) // WORLDWIDE (DLC REQUIRED)",
+                // FAQ EN
+                faqTitle: "CHEAT CODES (INFO)",
+                faqT1: "LOADING TIME", faqD1: "1-2 Weeks after placing order (Depends on availability).",
+                faqT2: "FREE DESIGN", faqD2: "The digital design proposal is 100% FREE.",
+                faqT3: "FAST TRAVEL", faqD3: "FREE Shipping within Colombia territory.",
+                faqT4: "CUSTOM SKINS", faqD4: "Upload your photos or images for a tailored design.",
+                faqT5: "WARRANTY (SAVE)", faqD5: "All rugs come with a 1-YEAR warranty.",
+                faqT6: "SYSTEM CARE", faqD6: "Avoid direct sun. No washing machine. Use wet wipes or vacuum.",
+                faqT7: "RESOLUTION", faqD7: "Standard: 70cm x 100cm. Varies by design.",
+                faqT8: "PAYMENT / CREDITS", faqD8: "Nequi, Daviplata, Bancolombia or Wire Transfer.",
                 contactTitle: "CONTINUE?"
             }
         };
@@ -466,6 +563,12 @@
             document.getElementById('step3-title').innerText = content[currentLang].step3T;
             document.getElementById('step3-desc').innerText = content[currentLang].step3D;
             document.getElementById('shipping-alert').innerText = content[currentLang].shipping;
+            // FAQ LOOP
+            document.getElementById('faq-title').innerText = content[currentLang].faqTitle;
+            for(let i=1; i<=8; i++) {
+                document.getElementById(`faq-t${i}`).innerText = content[currentLang][`faqT${i}`];
+                document.getElementById(`faq-d${i}`).innerText = content[currentLang][`faqD${i}`];
+            }
             // Contact
             document.getElementById('contact-title').innerText = content[currentLang].contactTitle;
 
