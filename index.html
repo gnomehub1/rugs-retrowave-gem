@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BillyTheKid | Tu Portal a la Nostalgia</title>
+    <title>BILLY THE KID | Arcade Rugs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         /* --- RESET & CORE VARIABLES --- */
         :root {
             --neon-pink: #ff00ff;
+            --neon-purple: #bd00ff;
             --neon-cyan: #00ffff;
-            --sun-gradient: linear-gradient(to bottom, #fad0c4 0%, #ff00ff 100%);
-            --grid-color: rgba(255, 0, 255, 0.4);
             --bg-dark: #0f0c29;
             --text-main: #ffffff;
-            --font-retro: 'Courier New', Courier, monospace; /* Placeholder for a Google Font like 'Press Start 2P' */
+            --font-header: 'Press Start 2P', cursive; /* 8-bit style font */
+            --font-body: 'Rajdhani', sans-serif; /* Clean, futuristic tech font */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,7 +22,7 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: var(--font-retro);
+            font-family: var(--font-body);
             overflow-x: hidden;
             height: 100vh;
             display: flex;
@@ -33,62 +34,43 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            perspective: 800px;
+            perspective: 1000px; /* Deeper perspective */
             overflow: hidden;
-            background: linear-gradient(to bottom, #020111 0%, #190a2e 100%);
-        }
-
-        /* The Sun */
-        .sun {
-            position: absolute;
-            bottom: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 300px;
-            background: var(--sun-gradient);
-            border-radius: 50%;
-            box-shadow: 0 0 40px var(--neon-pink), 0 0 80px var(--neon-pink);
-            z-index: 1;
-        }
-        
-        /* Sun Stripes (Clip path hack for the retro blinds effect) */
-        .sun::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0%,
-                transparent 80%,
-                var(--bg-dark) 80%,
-                var(--bg-dark) 100%
-            );
-            background-size: 100% 20px;
-            border-radius: 50%;
+            background: linear-gradient(to bottom, #020111 0%, #1a0b30 100%);
         }
 
         /* The Grid */
         .grid {
             position: absolute;
-            bottom: -30%;
+            bottom: -40%;
             left: -50%;
             width: 200%;
-            height: 100%;
+            height: 120%;
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 40px 40px;
+                linear-gradient(rgba(255, 0, 255, 0.5) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255, 0, 255, 0.5) 2px, transparent 2px);
+            background-size: 50px 50px;
             background-position: center bottom;
-            transform: rotateX(60deg);
-            animation: gridMove 20s linear infinite;
-            box-shadow: 0 0 100px rgba(0, 255, 255, 0.4);
-            z-index: 2;
+            transform: rotateX(70deg); /* Steeper angle */
+            animation: gridMove 15s linear infinite;
+            box-shadow: inset 0 0 100px rgba(189, 0, 255, 0.6);
+            z-index: 1;
+        }
+
+        /* Horizon Glow */
+        .grid::before {
+            content: '';
+            position: absolute;
+            top: -50px; /* Just above the grid horizon */
+            left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to top, var(--neon-pink), transparent);
+            filter: blur(30px);
+            opacity: 0.7;
         }
 
         @keyframes gridMove {
-            0% { transform: rotateX(60deg) translateY(0); }
-            100% { transform: rotateX(60deg) translateY(40px); }
+            0% { background-position: center 0px; }
+            100% { background-position: center 50px; }
         }
 
         /* --- UI LAYER --- */
@@ -96,30 +78,57 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 25px 5%;
             z-index: 10;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-family: var(--font-header);
+            font-size: 1.2rem;
             text-transform: uppercase;
+            color: var(--neon-cyan);
             text-shadow: 2px 2px 0px var(--neon-pink);
-            letter-spacing: 2px;
-            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        .lang-switch {
-            cursor: pointer;
-            border: 2px solid var(--neon-cyan);
-            padding: 5px 15px;
+        /* Retro Toggle Switch Style */
+        .lang-toggle-container {
+            display: flex;
+            align-items: center;
+            font-family: var(--font-header);
+            font-size: 0.7rem;
             color: var(--neon-cyan);
-            text-shadow: 0 0 5px var(--neon-cyan);
-            transition: 0.3s;
-            background: rgba(0,0,0,0.5);
         }
-        .lang-switch:hover {
-            background: var(--neon-cyan);
-            color: #000;
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 24px;
+            margin: 0 10px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #333;
+            border: 2px solid var(--neon-cyan);
+            transition: .4s;
+            box-shadow: 0 0 5px var(--neon-cyan);
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px; width: 16px;
+            left: 2px; bottom: 2px;
+            background-color: var(--neon-pink);
+            transition: .4s;
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        input:checked + .slider:before {
+            transform: translateX(36px);
+            background-color: var(--neon-cyan);
+             box-shadow: 0 0 10px var(--neon-cyan);
         }
 
         /* --- HERO CONTENT --- */
@@ -135,97 +144,164 @@
             position: relative;
         }
 
-        /* The Floating Rug Product */
-        .hero-rug-frame {
-            width: 300px; /* Adjust based on image ratio */
-            height: auto;
-            margin-bottom: 30px;
+        /* The Triangle Frame Container */
+        .triangle-container {
             position: relative;
-            animation: float 6s ease-in-out infinite;
+            width: 400px; height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
         }
 
-        /* NOTE: Ensure you put your image file in the same folder and name it correctly */
+        /* The Neon Triangles */
+        .triangle {
+            position: absolute;
+            width: 100%; height: 100%;
+            /* Creating a triangle using clip-path on a gradient background */
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            background: linear-gradient(to bottom, var(--neon-pink), transparent);
+            padding: 3px; /* Border thickness */
+            /* Masking the inside to make it hollow */
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+            filter: drop-shadow(0 0 10px var(--neon-pink));
+            animation: pulseTriangle 4s ease-in-out infinite alternate;
+        }
+
+        /* Second overlapping triangle */
+        .triangle:nth-child(2) {
+             width: 110%; height: 110%;
+             background: linear-gradient(to bottom, var(--neon-cyan), transparent);
+             filter: drop-shadow(0 0 10px var(--neon-cyan));
+             opacity: 0.6;
+             animation-delay: 1s;
+        }
+        
+        @keyframes pulseTriangle {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* The Floating Rug Product */
+        .hero-rug-frame {
+            width: 280px; /* Slightly smaller than frame so it sits inside */
+            height: auto;
+            position: relative;
+            z-index: 2;
+            animation: float 5s ease-in-out infinite;
+            /* 3D tilt effect */
+            transform: perspective(800px) rotateX(5deg);
+        }
+
+        /* IMPORTANT: Make sure your image is named hero-rug.png */
         .hero-rug-img {
             width: 100%;
-            border: 3px solid #fff;
-            box-shadow: 0 0 20px var(--neon-cyan), 0 0 50px var(--neon-pink);
-            transform: perspective(600px) rotateY(10deg);
+            border-radius: 4px;
+            /* A double neon glow border */
+            box-shadow: 
+                0 0 0 3px var(--bg-dark),
+                0 0 0 6px var(--neon-cyan),
+                0 0 30px var(--neon-cyan),
+                0 0 60px var(--neon-purple);
             transition: transform 0.3s;
         }
         
         .hero-rug-frame:hover .hero-rug-img {
-             transform: perspective(600px) rotateY(0deg) scale(1.05);
+             transform: scale(1.05);
+             box-shadow: 
+                0 0 0 3px var(--bg-dark),
+                0 0 0 6px var(--neon-pink),
+                0 0 40px var(--neon-pink),
+                0 0 80px var(--neon-purple);
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: perspective(800px) rotateX(5deg) translateY(0px); }
+            50% { transform: perspective(800px) rotateX(5deg) translateY(-25px); }
         }
 
+        /* TYPOGRAPHY */
         h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-family: var(--font-header);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            background: -webkit-linear-gradient(#fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0px 4px 10px rgba(0,0,0,0.8);
+            color: #fff;
+            text-shadow: 3px 3px 0px var(--neon-purple), -3px -3px 0px var(--neon-cyan);
+            line-height: 1.2;
         }
 
         p.subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: #e0e0e0;
-            max-width: 600px;
-            line-height: 1.5;
-            background-color: rgba(0,0,0,0.6); /* Backdrop for readability */
-            padding: 10px;
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            color: var(--neon-cyan);
+            max-width: 700px;
+            line-height: 1.4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            background: rgba(15, 12, 41, 0.8); /* Dark transparent background for readability */
+            padding: 15px;
+            border-left: 4px solid var(--neon-pink);
         }
 
         /* CRT Scanline Effect Overlay */
         .scanlines {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(
+            background: repeating-linear-gradient(
                 to bottom,
-                rgba(255,255,255,0),
-                rgba(255,255,255,0) 50%,
-                rgba(0,0,0,0.1) 50%,
-                rgba(0,0,0,0.1)
+                transparent 0%,
+                rgba(0, 0, 0, 0.2) 50%
             );
             background-size: 100% 4px;
             pointer-events: none;
             z-index: 999;
+            opacity: 0.6;
         }
 
-        /* CTA Button */
-        .btn-retro {
+        /* ARCADE BUTTON CTA */
+        .btn-arcade {
+            font-family: var(--font-header);
             display: inline-block;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 20px 40px;
+            font-size: 1rem;
             text-transform: uppercase;
             color: #fff;
-            background: linear-gradient(45deg, var(--neon-pink), #ff5e00);
-            border: none;
+            background: var(--bg-dark);
+            border: 4px solid var(--neon-pink);
             cursor: pointer;
-            box-shadow: 0 0 15px var(--neon-pink);
-            letter-spacing: 2px;
+            box-shadow: 0 0 20px var(--neon-pink), inset 0 0 10px var(--neon-pink);
             text-decoration: none;
             position: relative;
-            overflow: hidden;
-            font-weight: bold;
+            transition: 0.2s;
+            animation: blinkButton 1.5s infinite;
         }
         
-        .btn-retro::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: 0.5s;
+        .btn-arcade:hover {
+            background: var(--neon-pink);
+            color: var(--bg-dark);
+            box-shadow: 0 0 40px var(--neon-pink);
+            animation: none;
         }
         
-        .btn-retro:hover::before {
-            left: 100%;
+        /* Blinking effect for the button */
+        @keyframes blinkButton {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            p.subtitle { font-size: 1rem; }
+            .triangle-container { width: 300px; height: 300px; }
+            .hero-rug-frame { width: 200px; }
         }
 
     </style>
@@ -235,28 +311,39 @@
     <div class="scanlines"></div>
 
     <div class="scene-container">
-        <div class="sun"></div>
         <div class="grid"></div>
     </div>
 
     <nav>
         <div class="logo">BILLY <span style="color:var(--neon-pink)">THE KID</span></div>
-        <div class="lang-switch" onclick="toggleLanguage()">ES / EN</div>
+        
+        <div class="lang-toggle-container">
+            <span>ES</span>
+            <label class="switch">
+                <input type="checkbox" id="lang-toggle-input" onclick="toggleLanguage()">
+                <span class="slider"></span>
+            </label>
+            <span>EN</span>
+        </div>
     </nav>
 
     <section class="hero">
         
-        <div class="hero-rug-frame">
-            <img src="Gemini_Generated_Image_bnn7r9bnn7r9bnn7.jpg" alt="Daft Punk Pixel Rug" class="hero-rug-img">
+        <div class="triangle-container">
+            <div class="triangle"></div>
+            <div class="triangle"></div>
+            
+            <div class="hero-rug-frame">
+                <img src="hero-rug.png" alt="Retro Rug Showcase" class="hero-rug-img">
+            </div>
         </div>
 
         <h1 id="hero-title">TUFTING NOSTÁLGICO</h1>
         <p class="subtitle" id="hero-sub">
-            Alfombras hechas a mano con hilo acrílico premium. <br>
-            Diseños retro, pixel art y cultura pop para tu base secreta.
+            Alfombras hechas a mano. Vibes retro, pixel art y pop culture para tu arcade base.
         </p>
         
-        <a href="#contact" class="btn-retro" id="hero-cta">INSERT COIN TO START</a>
+        <a href="#contact" class="btn-arcade">INSERT COIN TO START</a>
 
     </section>
 
@@ -265,25 +352,25 @@
         const content = {
             es: {
                 title: "TUFTING NOSTÁLGICO",
-                sub: "Alfombras hechas a mano con hilo acrílico premium. Diseños retro, pixel art y cultura pop para tu base secreta.",
-                cta: "INICIAR JUEGO (CONTACTAR)"
+                sub: "Alfombras hechas a mano. Vibes retro, pixel art y pop culture para tu arcade base."
             },
             en: {
                 title: "NOSTALGIC TUFTING",
-                sub: "Hand-made rugs using premium acrylic yarn. Retro designs, pixel art, and pop culture for your secret base.",
-                cta: "INSERT COIN (CONTACT)"
+                sub: "Hand-made rugs. Retro vibes, pixel art, and pop culture for your arcade base."
             }
         };
 
         let currentLang = 'es';
 
         function toggleLanguage() {
-            currentLang = currentLang === 'es' ? 'en' : 'es';
+            const toggleInput = document.getElementById('lang-toggle-input');
+            currentLang = toggleInput.checked ? 'en' : 'es';
             
-            // Update Text
+            // Update Text based on selection
             document.getElementById('hero-title').innerText = content[currentLang].title;
             document.getElementById('hero-sub').innerText = content[currentLang].sub;
-            document.getElementById('hero-cta').innerText = content[currentLang].cta;
+            // Note: CTA button text is intentionally not changed.
+            
             document.documentElement.lang = currentLang;
         }
     </script>
