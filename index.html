@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BillyTheKid | Tu Portal a la Nostalgia</title>
+    <style>
+        /* --- RESET & CORE VARIABLES --- */
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --sun-gradient: linear-gradient(to bottom, #fad0c4 0%, #ff00ff 100%);
+            --grid-color: rgba(255, 0, 255, 0.4);
+            --bg-dark: #0f0c29;
+            --text-main: #ffffff;
+            --font-retro: 'Courier New', Courier, monospace; /* Placeholder for a Google Font like 'Press Start 2P' */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-retro);
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- THE RETROWAVE SCENE (BACKGROUND) --- */
+        .scene-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            perspective: 800px;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #020111 0%, #190a2e 100%);
+        }
+
+        /* The Sun */
+        .sun {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: var(--sun-gradient);
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--neon-pink), 0 0 80px var(--neon-pink);
+            z-index: 1;
+        }
+        
+        /* Sun Stripes (Clip path hack for the retro blinds effect) */
+        .sun::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 80%,
+                var(--bg-dark) 80%,
+                var(--bg-dark) 100%
+            );
+            background-size: 100% 20px;
+            border-radius: 50%;
+        }
+
+        /* The Grid */
+        .grid {
+            position: absolute;
+            bottom: -30%;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center bottom;
+            transform: rotateX(60deg);
+            animation: gridMove 20s linear infinite;
+            box-shadow: 0 0 100px rgba(0, 255, 255, 0.4);
+            z-index: 2;
+        }
+
+        @keyframes gridMove {
+            0% { transform: rotateX(60deg) translateY(0); }
+            100% { transform: rotateX(60deg) translateY(40px); }
+        }
+
+        /* --- UI LAYER --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px var(--neon-pink);
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .lang-switch {
+            cursor: pointer;
+            border: 2px solid var(--neon-cyan);
+            padding: 5px 15px;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 5px var(--neon-cyan);
+            transition: 0.3s;
+            background: rgba(0,0,0,0.5);
+        }
+        .lang-switch:hover {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        /* --- HERO CONTENT --- */
+        .hero {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* The Floating Rug Product */
+        .hero-rug-frame {
+            width: 300px; /* Adjust based on image ratio */
+            height: auto;
+            margin-bottom: 30px;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* NOTE: Ensure you put your image file in the same folder and name it correctly */
+        .hero-rug-img {
+            width: 100%;
+            border: 3px solid #fff;
+            box-shadow: 0 0 20px var(--neon-cyan), 0 0 50px var(--neon-pink);
+            transform: perspective(600px) rotateY(10deg);
+            transition: transform 0.3s;
+        }
+        
+        .hero-rug-frame:hover .hero-rug-img {
+             transform: perspective(600px) rotateY(0deg) scale(1.05);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            background: -webkit-linear-gradient(#fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.8);
+        }
+
+        p.subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+            max-width: 600px;
+            line-height: 1.5;
+            background-color: rgba(0,0,0,0.6); /* Backdrop for readability */
+            padding: 10px;
+        }
+
+        /* CRT Scanline Effect Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* CTA Button */
+        .btn-retro {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(45deg, var(--neon-pink), #ff5e00);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--neon-pink);
+            letter-spacing: 2px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+        }
+        
+        .btn-retro::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-retro:hover::before {
+            left: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+
+    <div class="scene-container">
+        <div class="sun"></div>
+        <div class="grid"></div>
+    </div>
+
+    <nav>
+        <div class="logo">BILLY <span style="color:var(--neon-pink)">THE KID</span></div>
+        <div class="lang-switch" onclick="toggleLanguage()">ES / EN</div>
+    </nav>
+
+    <section class="hero">
+        
+        <div class="hero-rug-frame">
+            <img src="Gemini_Generated_Image_bnn7r9bnn7r9bnn7.jpg" alt="Daft Punk Pixel Rug" class="hero-rug-img">
+        </div>
+
+        <h1 id="hero-title">TUFTING NOSTÁLGICO</h1>
+        <p class="subtitle" id="hero-sub">
+            Alfombras hechas a mano con hilo acrílico premium. <br>
+            Diseños retro, pixel art y cultura pop para tu base secreta.
+        </p>
+        
+        <a href="#contact" class="btn-retro" id="hero-cta">INSERT COIN TO START</a>
+
+    </section>
+
+    <script>
+        // --- TEXT CONTENT DATABASE ---
+        const content = {
+            es: {
+                title: "TUFTING NOSTÁLGICO",
+                sub: "Alfombras hechas a mano con hilo acrílico premium. Diseños retro, pixel art y cultura pop para tu base secreta.",
+                cta: "INICIAR JUEGO (CONTACTAR)"
+            },
+            en: {
+                title: "NOSTALGIC TUFTING",
+                sub: "Hand-made rugs using premium acrylic yarn. Retro designs, pixel art, and pop culture for your secret base.",
+                cta: "INSERT COIN (CONTACT)"
+            }
+        };
+
+        let currentLang = 'es';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            
+            // Update Text
+            document.getElementById('hero-title').innerText = content[currentLang].title;
+            document.getElementById('hero-sub').innerText = content[currentLang].sub;
+            document.getElementById('hero-cta').innerText = content[currentLang].cta;
+            document.documentElement.lang = currentLang;
+        }
+    </script>
+</body>
+</html>
