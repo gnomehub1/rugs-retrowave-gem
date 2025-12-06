@@ -38,13 +38,139 @@
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             perspective: 1000px;
-            background: linear-gradient(to bottom, #020111 0%, #1a0b30 100%);
+            background: linear-gradient(to bottom, #020111 0%, #3a1a5a 50%, #1a0b30 100%);
+        }
+
+        /* --- SYNTHWAVE SUN --- */
+        .synthwave-sun {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(to bottom,
+                #ff00ff 0%,
+                #ff1493 25%,
+                #ff6b9d 50%,
+                #ffa07a 75%,
+                #ffcc00 100%);
+            border-radius: 50%;
+            box-shadow:
+                0 0 60px #ff00ff,
+                0 0 100px #ff1493,
+                0 0 140px #ff6b9d;
+            animation: sunPulse 8s ease-in-out infinite;
+            z-index: 0;
+            opacity: 0.8;
+        }
+
+        .synthwave-sun::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                transparent,
+                transparent 8px,
+                rgba(0, 0, 0, 0.6) 8px,
+                rgba(0, 0, 0, 0.6) 16px
+            );
+            border-radius: 50%;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateX(-50%) scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        /* --- STARFIELD --- */
+        .starfield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+        }
+
+        .star.small {
+            width: 1px;
+            height: 1px;
+            box-shadow: 0 0 2px #fff, 0 0 4px #00ffff;
+        }
+
+        .star.medium {
+            width: 2px;
+            height: 2px;
+            box-shadow: 0 0 3px #fff, 0 0 6px #ff00ff;
+        }
+
+        .star.large {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 4px #fff, 0 0 8px #ff00ff, 0 0 12px #00ffff;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* --- VERTICAL GRID LINES --- */
+        .vertical-grid {
+            position: absolute;
+            bottom: 44.5%;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .grid-line-vertical {
+            position: absolute;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to top,
+                rgba(255, 0, 255, 0.5) 0%,
+                rgba(255, 0, 255, 0.3) 40%,
+                rgba(255, 0, 255, 0) 100%);
+            box-shadow: 0 0 5px rgba(255, 0, 255, 0.4);
+            animation: pulseVertical 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseVertical {
+            0%, 100% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
         }
 
         .grid {
             position: absolute;
             bottom: -40%; left: -50%; width: 200%; height: 120%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(255, 0, 255, 0.5) 2px, transparent 2px),
                 linear-gradient(90deg, rgba(255, 0, 255, 0.5) 2px, transparent 2px);
             background-size: 50px 50px;
@@ -52,6 +178,7 @@
             transform: rotateX(70deg);
             animation: gridMove 15s linear infinite;
             box-shadow: inset 0 0 100px rgba(189, 0, 255, 0.6);
+            z-index: -1;
         }
         
         .grid::before {
@@ -108,24 +235,32 @@
         }
 
         .triangle-container {
-            position: relative; width: 400px; height: 400px;
-            display: flex; justify-content: center; align-items: center; margin-bottom: 40px;
+            position: relative; width: 500px; height: 500px;
+            display: flex; justify-content: center; align-items: center; margin-bottom: 80px;
         }
         
         .triangle {
-            position: absolute; width: 100%; height: 100%;
-            clip-path: polygon(50% 100%, 0 0, 100% 0);
-            background: linear-gradient(to bottom, var(--neon-pink), transparent);
-            padding: 3px; 
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            z-index: -1; filter: drop-shadow(0 0 10px var(--neon-pink));
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .triangle svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .triangle:nth-child(1) {
             animation: pulseTriangle 4s ease-in-out infinite alternate;
         }
+
         .triangle:nth-child(2) {
-             width: 110%; height: 110%;
-             background: linear-gradient(to bottom, var(--neon-cyan), transparent);
-             filter: drop-shadow(0 0 10px var(--neon-cyan)); opacity: 0.6; animation-delay: 1s;
+            width: 110%;
+            height: 110%;
+            opacity: 0.6;
+            animation: pulseTriangle 4s ease-in-out infinite alternate;
+            animation-delay: 1s;
         }
         @keyframes pulseTriangle {
             0% { transform: scale(1); opacity: 0.8; }
@@ -133,7 +268,7 @@
         }
 
         .hero-rug-frame {
-            width: 280px; height: auto; position: relative; z-index: 2;
+            width: 350px; height: auto; position: relative; z-index: 2;
             animation: float 5s ease-in-out infinite;
             transform: perspective(800px) rotateX(5deg);
         }
@@ -337,8 +472,8 @@
 
         @media (max-width: 768px) {
             h1 { font-size: 1.8rem; }
-            .triangle-container { width: 300px; height: 300px; }
-            .hero-rug-frame { width: 200px; }
+            .triangle-container { width: 380px; height: 380px; }
+            .hero-rug-frame { width: 300px; }
             .process-step { flex-direction: column; text-align: center; }
             .step-num { margin: 0 0 10px 0; }
             .faq-grid { grid-template-columns: 1fr; }
@@ -348,7 +483,12 @@
 <body>
 
     <div class="scanlines"></div>
-    <div class="scene-container"><div class="grid"></div></div>
+    <div class="scene-container">
+        <div class="starfield" id="starfield"></div>
+        <div class="synthwave-sun"></div>
+        <div class="grid"></div>
+        <div class="vertical-grid" id="vertical-grid"></div>
+    </div>
 
     <nav>
         <div class="logo" onclick="window.scrollTo(0,0)">BILLY <span style="color:var(--neon-pink)">THE KID</span></div>
@@ -364,7 +504,36 @@
 
     <section class="hero">
         <div class="triangle-container">
-            <div class="triangle"></div><div class="triangle"></div>
+            <div class="triangle">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <polygon points="50,100 0,0 100,0"
+                             fill="none"
+                             stroke="url(#gradient-pink)"
+                             stroke-width="0.8"
+                             filter="drop-shadow(0 0 10px rgba(255, 0, 255, 0.8))"/>
+                    <defs>
+                        <linearGradient id="gradient-pink" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" style="stop-color:#ff00ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff00ff;stop-opacity:0.3" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="triangle">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <polygon points="50,100 0,0 100,0"
+                             fill="none"
+                             stroke="url(#gradient-cyan)"
+                             stroke-width="0.8"
+                             filter="drop-shadow(0 0 10px rgba(0, 255, 255, 0.8))"/>
+                    <defs>
+                        <linearGradient id="gradient-cyan" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00ffff;stop-opacity:0.3" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
             <div class="hero-rug-frame">
                 <img src="hero-rug.png" alt="Retro Rug Showcase" class="hero-rug-img">
             </div>
@@ -497,6 +666,59 @@
     </div>
 
     <script>
+        // --- GENERATE STARFIELD ---
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 80;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                // Random size
+                const sizeClass = Math.random() < 0.6 ? 'small' : (Math.random() < 0.7 ? 'medium' : 'large');
+                star.classList.add(sizeClass);
+
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+
+                // Random animation duration and delay
+                star.style.animationDuration = (2 + Math.random() * 4) + 's';
+                star.style.animationDelay = Math.random() * 3 + 's';
+
+                starfield.appendChild(star);
+            }
+        }
+
+        // Initialize starfield on page load
+        createStarfield();
+
+        // --- GENERATE VERTICAL GRID LINES ---
+        function createVerticalGrid() {
+            const container = document.getElementById('vertical-grid');
+            const lineCount = 20; // Number of vertical lines
+
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'grid-line-vertical';
+
+                // Evenly space lines across the screen
+                line.style.left = ((i / lineCount) * 100) + '%';
+
+                // All lines reach full height
+                line.style.height = '100%';
+
+                // Staggered pulsing animation
+                line.style.animationDelay = (i * 0.2) + 's';
+
+                container.appendChild(line);
+            }
+        }
+
+        // Initialize vertical grid on page load
+        createVerticalGrid();
+
         // --- TRANSLATION DATA ---
         const content = {
             es: {
